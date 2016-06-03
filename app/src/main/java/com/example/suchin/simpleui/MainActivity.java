@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
             textview.setText(name);
         } else {
 
-            String content = name + " gender: " + gender;
+            String content = "Name: "+name + ", Gender: " + gender;
             textview.setText(content);
         }
 
