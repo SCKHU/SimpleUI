@@ -98,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
         Order order = new Order();
         order.note = note;
         order.drinkName = drinkName;
+        order.storeInfo = (String)storeSpinner.getSelectedItem().toString();
         orders.add(order);
         setupListView();
 //        changeTextView();

@@ -20,4 +20,14 @@
         android:layout_below="@+id/drinkNameTextView"
         android:layout_alignRight="@+id/drinkNameTextView"
         android:layout_alignEnd="@+id/drinkNameTextView" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Store"
+        android:id="@+id/storeTextView"
+        android:layout_above="@+id/noteTextView"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 </RelativeLayout>
