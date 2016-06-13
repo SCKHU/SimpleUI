@@ -1,5 +1,6 @@
 package com.example.suchin.simpleui;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,9 +27,6 @@ public class MainActivity extends AppCompatActivity {
     EditText editview;
     RadioGroup radiogroup;
     CheckBox checkbox;
-    //    String gender = "Female";
-//    String name = "";
-//    String HideGender = "";
     String drinkName = "Black Tea";
     ListView listView;
     ArrayList<Order> orders = new ArrayList<>();
@@ -65,29 +63,7 @@ public class MainActivity extends AppCompatActivity {
 //                return false;
 //            }
 //        });
-
-        radiogroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-//                if (checkedId == R.id.MaleRadioButton) {
-//                    gender = "Male";
-//                } else if (checkedId == R.id.FemaleRadioButton) {
-//                    gender = "Female";
-//                }
-                RadioButton radiobutton = (RadioButton) findViewById(checkedId);
-                drinkName = radiobutton.getText().toString();
-            }
-        });
-
-
-//        checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                changeTextView();
-//            }
-//        });
-//    }
-
+        Log.d("Debug", "onCreate");
 
     }
 
@@ -98,26 +74,12 @@ public class MainActivity extends AppCompatActivity {
         Order order = new Order();
         order.note = note;
         order.drinkName = drinkName;
-        order.storeInfo = (String)storeSpinner.getSelectedItem().toString();
+        order.storeInfo = (String) storeSpinner.getSelectedItem().toString();
         orders.add(order);
         setupListView();
-//        changeTextView();
-//        editview.setText("");
+
     }
 
-//    public void changeTextView() {
-//        if (name.equals(""))
-//            return;
-//        if (checkbox.isChecked()) {
-//
-//
-//            textview.setText(name);
-//        } else {
-//
-//            String content = "Name: "+name + ", Gender: " + gender;
-//            textview.setText(content);
-//        }
-//    }
 
     void setupListView() {
 //2016.06.06  adapter1
@@ -149,8 +111,50 @@ public class MainActivity extends AppCompatActivity {
     void setupSpinner() {
 
         String[] data = getResources().getStringArray(R.array.storeInfo);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,data);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, data);
         storeSpinner.setAdapter(adapter);
     }
 
+    public void goToMenu(View view) {
+        Intent intent = new Intent();
+        intent.setClass(this, DrinkMenuActivity.class);
+        startActivity(intent);
+    }
+
+    // 2016.06.13 the activity life cycle
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d("Debug", "Main Activity onStart");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d("Debug", "Main Activity onPause");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d("Debug", "Main Activity onStop");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d("Debug", "Main Activity onDestroy");
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.d("Debug", "Main Activity onRestart");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d("Debug", "Main Activity onResume");
+    }
 }

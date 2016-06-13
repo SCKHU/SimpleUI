@@ -22,7 +22,6 @@
         android:text="click me"
         android:id="@+id/button"
         android:onClick="click"
-        android:background="@drawable/button"
         android:textSize="30dp"
         android:textStyle="bold"
         android:layout_below="@+id/checkBox"
@@ -101,5 +100,16 @@
         android:layout_below="@+id/radioGroup"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Menu"
+        android:id="@+id/buttonMenu"
+        android:layout_below="@+id/spinner"
+        android:layout_toRightOf="@+id/textview"
+        android:layout_toEndOf="@+id/textview"
+        android:layout_marginTop="0dp"
+        android:onClick="goToMenu" />
 
 </RelativeLayout>
