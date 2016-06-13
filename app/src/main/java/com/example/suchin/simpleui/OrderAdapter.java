@@ -67,12 +67,13 @@ public class OrderAdapter extends BaseAdapter {
 
 
     }
-//inner class
+
+    //inner class
     class Holder {
 
         TextView drinkName;
         TextView note;
-    TextView storeInfo;
+        TextView storeInfo;
 
     }
 }
