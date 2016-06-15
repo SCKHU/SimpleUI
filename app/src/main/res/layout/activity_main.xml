@@ -22,7 +22,6 @@
         android:text="click me"
         android:id="@+id/button"
         android:onClick="click"
-        android:textSize="30dp"
         android:textStyle="bold"
         android:layout_below="@+id/checkBox"
         android:layout_alignParentLeft="true"
@@ -51,14 +50,14 @@
             android:layout_height="wrap_content"
             android:text="Black Tea"
             android:id="@+id/BlackTeaButton"
-            android:checked="false" />
+            android:checked="true" />
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Red Tea"
             android:id="@+id/RedTeaButton"
-            android:checked="true" />
+            android:checked="false" />
     </RadioGroup>
 
     <CheckBox
@@ -106,10 +105,9 @@
         android:layout_height="wrap_content"
         android:text="Menu"
         android:id="@+id/buttonMenu"
-        android:layout_below="@+id/spinner"
-        android:layout_toRightOf="@+id/textview"
-        android:layout_toEndOf="@+id/textview"
-        android:layout_marginTop="0dp"
-        android:onClick="goToMenu" />
+        android:onClick="goToMenu"
+        android:layout_toRightOf="@+id/button"
+        android:layout_toEndOf="@+id/button"
+        android:layout_below="@+id/checkBox" />
 
 </RelativeLayout>

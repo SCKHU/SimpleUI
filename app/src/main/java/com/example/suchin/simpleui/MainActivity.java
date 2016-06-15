@@ -16,6 +16,7 @@ import android.widget.RadioGroup;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,6 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
+    static final int REQUEST_CODE_DRINK_MENU_ACTIVITY = 0;
     TextView textview;
     EditText editview;
     RadioGroup radiogroup;
@@ -118,7 +120,19 @@ public class MainActivity extends AppCompatActivity {
     public void goToMenu(View view) {
         Intent intent = new Intent();
         intent.setClass(this, DrinkMenuActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent, REQUEST_CODE_DRINK_MENU_ACTIVITY);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_CODE_DRINK_MENU_ACTIVITY) {
+            if (resultCode == RESULT_OK) {
+                textview.setText(data.getStringExtra("results"));
+                Toast.makeText(this, "Order done", Toast.LENGTH_LONG).show();//homework
+            } else if (resultCode == RESULT_CANCELED) {
+                Toast.makeText(this, "Order canceled", Toast.LENGTH_LONG).show();//homework
+            }
+        }
     }
 
     // 2016.06.13 the activity life cycle
