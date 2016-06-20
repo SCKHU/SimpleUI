@@ -1,5 +1,7 @@
 package com.example.suchin.simpleui;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
@@ -19,12 +21,12 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class DrinkMenuActivity extends AppCompatActivity {
+public class DrinkMenuActivity extends AppCompatActivity implements DrinkOrderDialog.OnDrinkOrderListener {
 
     ListView drinkListView;
     TextView priceTextView;
     ArrayList<Drink> drinks = new ArrayList<>();
-    ArrayList<Drink> drinkOrders = new ArrayList<>();
+    ArrayList<DrinkOrder> drinkOrders = new ArrayList<>();
 
     //SET DATA
     String[] names = {"冬瓜紅茶", "玫瑰鹽奶蓋紅茶", "珍珠紅茶拿鐵", "烏龍綠茶"};
@@ -53,10 +55,14 @@ public class DrinkMenuActivity extends AppCompatActivity {
         drinkListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                DrinkAdapter drinkAdapter = (DrinkAdapter) parent.getAdapter();
-                Drink drink = (Drink) drinkAdapter.getItem(position);
-                drinkOrders.add(drink);
-                updateTotalPrice();
+//                DrinkAdapter drinkAdapter = (DrinkAdapter) parent.getAdapter();
+//                Drink drink = (Drink) drinkAdapter.getItem(position);
+//                drinkOrders.add(drink);
+//                updateTotalPrice();
+                //2016.06.16
+                Drink drink = (Drink) parent.getAdapter().getItem(position);
+                ShowDetailDrinkMenu(drink);
+
             }
         });
         Log.d("Debug", "DrinkMenu onCreate");
@@ -65,10 +71,43 @@ public class DrinkMenuActivity extends AppCompatActivity {
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
+    private void ShowDetailDrinkMenu(Drink drink) {
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+
+        DrinkOrder drinkOrder = new DrinkOrder();
+
+        Boolean flag = false;
+        for (DrinkOrder order : drinkOrders)
+        {
+            if(order.drinkName.equals(drink.name))
+            {
+                drinkOrder = order;
+                flag = true;
+                break;
+            }
+
+        }
+        if(!flag) {
+
+            drinkOrder.mPrice = drink.mPrice;
+            drinkOrder.lPrice = drink.lPrice;
+            drinkOrder.drinkName = drink.name;
+
+        }
+        DrinkOrderDialog orderDialog = DrinkOrderDialog.newInstance(drinkOrder);
+        orderDialog.show(ft, "DrinkOrderDialog");
+
+
+//        ft.replace(R.id.root, orderDialog);
+//        ft.addToBackStack(null);
+//        ft.commit();
+    }
+
     private void updateTotalPrice() {
         int total = 0;
-        for (Drink drink : drinkOrders) {
-            total += drink.mPrice;
+        for (DrinkOrder order : drinkOrders) {
+            total += order.mPrice*order.mNumber + order.lPrice*order.lNumber;
         }
         priceTextView.setText(String.valueOf(total));
     }
@@ -92,8 +131,8 @@ public class DrinkMenuActivity extends AppCompatActivity {
     public void done(View view) {//bring things back to main activity
         JSONArray array = new JSONArray();
         Intent intent = new Intent();
-        for (Drink drink : drinkOrders) {
-            JSONObject jsonObject = drink.getData();
+        for (DrinkOrder order : drinkOrders) {
+            JSONObject jsonObject = order.getJsonObject();
             array.put(jsonObject);
         }
         intent.putExtra("results", array.toString());
@@ -177,4 +216,20 @@ public class DrinkMenuActivity extends AppCompatActivity {
         Log.d("Debug", "DrinkMenu onResume");
     }
 
+    @Override
+    public void OnDrinkOrderFinished(DrinkOrder drinkOrder) {
+        for (int i = 0; i<drinkOrders.size(); i++)
+        {
+            if(drinkOrders.get(i).drinkName.equals(drinkOrder.drinkName))
+            {
+                drinkOrders.set(i, drinkOrder);
+                updateTotalPrice();
+                return;
+
+            }
+        }
+        drinkOrders.add(drinkOrder);
+        updateTotalPrice();
+        return;
+    }
 }
