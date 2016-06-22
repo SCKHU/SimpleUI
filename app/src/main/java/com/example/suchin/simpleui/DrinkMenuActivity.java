@@ -76,7 +76,7 @@ public class DrinkMenuActivity extends AppCompatActivity implements DrinkOrderDi
         FragmentTransaction ft = fragmentManager.beginTransaction();
 
         DrinkOrder drinkOrder = new DrinkOrder();
-
+//2016.06.20
         Boolean flag = false;
         for (DrinkOrder order : drinkOrders)
         {

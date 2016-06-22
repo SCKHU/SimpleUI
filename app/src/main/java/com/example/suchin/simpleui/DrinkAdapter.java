@@ -8,8 +8,6 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 
 /**
@@ -47,7 +45,7 @@ public class DrinkAdapter extends BaseAdapter {
 
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.listview_dink_item, null);
-            holder.drinkNameTextView = (TextView) convertView.findViewById(R.id.drinkNameTextView);
+            holder.drinkNameTextView = (TextView) convertView.findViewById(R.id.noteTextView);
             holder.mPriceTextView = (TextView) convertView.findViewById(R.id.mPriceTextView);
             holder.lPriceTextView = (TextView) convertView.findViewById(R.id.lPriceTextView);
             holder.imageImageView = (ImageView) convertView.findViewById(R.id.drinkImageView);

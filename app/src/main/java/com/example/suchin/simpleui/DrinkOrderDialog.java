@@ -104,6 +104,8 @@ public class DrinkOrderDialog extends DialogFragment {
             public void onClick(DialogInterface dialog, int which) {
             }
         });
+
+        //2016.06.20
         mNumberPicker = (NumberPicker) root.findViewById(R.id.mNumberPicker);
         mNumberPicker.setMaxValue(100);
         mNumberPicker.setMinValue(0);
